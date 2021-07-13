@@ -1,21 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PasswordValidation
 {
     public class PasswordValidator
     {
-        public static string Validate(string password)
+        private List<string> passwordValidationErrors = new List<string>();
+
+        public string Validate(string password)
+        {
+            ValidatePasswordLength(password);
+
+            ValidatePasswordContainsAtLeastTwoNumbers(password);
+
+            return FormatPasswordValidationErrors();
+        }
+
+        private void ValidatePasswordLength(string password)
         {
             if (password.Length < 8)
-                return "Password must be at least 8 characters";
+                passwordValidationErrors.Add("Password must be at least 8 characters");
+        }
 
+        private void ValidatePasswordContainsAtLeastTwoNumbers(string password)
+        {
             int numberCounter = 0;
             Array.ForEach(password.ToCharArray(), delegate (char character) { if (Char.IsNumber(character)) { numberCounter++; } });
 
             if (numberCounter < 2)
-                return "The password must contain at least 2 numbers";
+                passwordValidationErrors.Add("The password must contain at least 2 numbers");
+        }
 
-            return string.Empty;
+        private string FormatPasswordValidationErrors()
+        {
+            return string.Join("\n", passwordValidationErrors);
         }
     }
 }
