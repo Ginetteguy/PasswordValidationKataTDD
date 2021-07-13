@@ -16,6 +16,8 @@ namespace PasswordValidation
 
             ValidatePasswordContainsAtLeastOneCapitalLetter(password);
 
+            ValidatePasswordContainsAtLeastOneSpecialCaracter(password);
+
             return FormatPasswordValidationErrors();
         }
 
@@ -35,6 +37,12 @@ namespace PasswordValidation
         {
             if (!new Regex(@"[A-Z]+").IsMatch(password))
                 passwordValidationErrors.Add("Password must contain at least one capital letter");
+        }
+
+        private void ValidatePasswordContainsAtLeastOneSpecialCaracter(string password)
+        {
+            if (!new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]").IsMatch(password))
+                passwordValidationErrors.Add("Password must contain at least one special character");
         }
 
         private string FormatPasswordValidationErrors()
