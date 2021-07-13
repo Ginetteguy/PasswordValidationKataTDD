@@ -1,13 +1,21 @@
 ﻿using NUnit.Framework;
+using PasswordValidation;
 
 namespace PasswordValidationTests
 {
     public class PasswordValidatorTests
     {
         [Test]
-        public void Test1()
+        public void WhenPasswordLengthIs7_ShouldReturnThatIsTooShort()
         {
-            Assert.Pass(); ;
+            // Arrange
+            const string password = "ABCDEFG";
+            
+            // Setup
+            string result = PasswordValidator.Validate(password);
+
+            // Assert
+            Assert.AreEqual("Password must be at least 8 characters", result);
         }
     }
 }
